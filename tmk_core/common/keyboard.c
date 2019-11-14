@@ -312,8 +312,15 @@ void keyboard_task(void) {
 #else
     matrix_scan();
 #endif
+<<<<<<< HEAD
 
     if (should_process_keypress()) {
+=======
+#ifndef SPLIT_TRANSPORT_MIRROR
+    if (is_keyboard_master())
+#endif
+    {
+>>>>>>> Updated keyboard.c for split mirroring
         for (uint8_t r = 0; r < MATRIX_ROWS; r++) {
             matrix_row    = matrix_get_row(r);
             matrix_change = matrix_row ^ matrix_prev[r];
@@ -342,7 +349,7 @@ void keyboard_task(void) {
                 }
             }
         }
-    //}
+    }
     // call with pseudo tick event when no real key event.
 #ifdef QMK_KEYS_PER_SCAN
     // we can get here with some keys processed now.
