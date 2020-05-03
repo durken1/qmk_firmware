@@ -221,6 +221,7 @@ __attribute__((weak)) bool is_keyboard_master(void) { return true; }
  */
 __attribute__((weak)) bool should_process_keypress(void) {
 #if defined(SPLIT_KEYBOARD) && defined(PLIT_TRANSPORT_MIRROR)
+    is_keyboard_master(); // run to init checks
     return true;
 #else
     return is_keyboard_master();
