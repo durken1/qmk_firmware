@@ -191,6 +191,12 @@ communication protocol and may impact the matrix scan speed when enabled.
 The purpose of this feature is to support cosmetic use of modifer state (e.g.
 displaying status on an OLED screen).
 
+```c
+#define SPLIT_HOST_SYNC_ENABLE
+```
+
+This enables syncingo of the Host LED status (caps lock, num lock, etc) betwen both halves of the split keyboard. The main purpose of this feature is to enable support for use of things like OLED display of the Host LED status. 
+
 ###  Hardware Configuration Options
 
 There are some settings that you may need to configure, based on how the hardware is set up. 
