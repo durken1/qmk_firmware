@@ -77,7 +77,7 @@ uint32_t reset_key __attribute__((section(".noinit,\"aw\",@nobits;")));
  *
  * FIXME: needs doc
  */
-void bootloader_jump(void) {
+__attribute__((weak)) void bootloader_jump(void) {
 #if !defined(BOOTLOADER_SIZE)
     uint8_t high_fuse = boot_lock_fuse_bits_get(GET_HIGH_FUSE_BITS);
 
@@ -237,13 +237,13 @@ void bootloader_jump(void) {
                  "bootloader_startup_loop%=:         \n\t"
                  "rjmp bootloader_startup_loop%=     \n\t"
                  :
-                 : [mcucsrio] "I"(_SFR_IO_ADDR(MCUCSR)),
+                 : [ mcucsrio ] "I"(_SFR_IO_ADDR(MCUCSR)),
 #    if (FLASHEND > 131071)
-                   [ramendhi] "M"(((RAMEND - 2) >> 8) & 0xff), [ramendlo] "M"(((RAMEND - 2) >> 0) & 0xff), [bootaddrhi] "M"((((FLASH_SIZE - BOOTLOADER_SIZE) >> 1) >> 16) & 0xff),
+                   [ ramendhi ] "M"(((RAMEND - 2) >> 8) & 0xff), [ ramendlo ] "M"(((RAMEND - 2) >> 0) & 0xff), [ bootaddrhi ] "M"((((FLASH_SIZE - BOOTLOADER_SIZE) >> 1) >> 16) & 0xff),
 #    else
-                   [ramendhi] "M"(((RAMEND - 1) >> 8) & 0xff), [ramendlo] "M"(((RAMEND - 1) >> 0) & 0xff),
+                   [ ramendhi ] "M"(((RAMEND - 1) >> 8) & 0xff), [ ramendlo ] "M"(((RAMEND - 1) >> 0) & 0xff),
 #    endif
-                   [bootaddrme] "M"((((FLASH_SIZE - BOOTLOADER_SIZE) >> 1) >> 8) & 0xff), [bootaddrlo] "M"((((FLASH_SIZE - BOOTLOADER_SIZE) >> 1) >> 0) & 0xff));
+                   [ bootaddrme ] "M"((((FLASH_SIZE - BOOTLOADER_SIZE) >> 1) >> 8) & 0xff), [ bootaddrlo ] "M"((((FLASH_SIZE - BOOTLOADER_SIZE) >> 1) >> 0) & 0xff));
 
 #else  // Assume remaining boards are DFU, even if the flag isn't set
 

@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "led.h"
 #include "keycode.h"
 #include "timer.h"
+#include "sync_timer.h"
 #include "print.h"
 #include "debug.h"
 #include "command.h"
@@ -95,22 +96,46 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifdef DIP_SWITCH_ENABLE
 #    include "dip_switch.h"
 #endif
+#ifdef SPLIT_KEYBOARD
+#    include "split_util.h"
+#endif
+
+static uint32_t last_input_modification_time = 0;
+uint32_t        last_input_activity_time(void) { return last_input_modification_time; }
+uint32_t        last_input_activity_elapsed(void) { return timer_elapsed32(last_input_modification_time); }
+
+static uint32_t last_matrix_modification_time = 0;
+uint32_t        last_matrix_activity_time(void) { return last_matrix_modification_time; }
+uint32_t        last_matrix_activity_elapsed(void) { return timer_elapsed32(last_matrix_modification_time); }
+void            last_matrix_activity_trigger(void) { last_matrix_modification_time = last_input_modification_time = timer_read32(); }
+
+static uint32_t last_encoder_modification_time = 0;
+uint32_t        last_encoder_activity_time(void) { return last_encoder_modification_time; }
+uint32_t        last_encoder_activity_elapsed(void) { return timer_elapsed32(last_encoder_modification_time); }
+void            last_encoder_activity_trigger(void) { last_encoder_modification_time = last_input_modification_time = timer_read32(); }
 
 // Only enable this if console is enabled to print to
-#if defined(DEBUG_MATRIX_SCAN_RATE) && defined(CONSOLE_ENABLE)
+#if defined(DEBUG_MATRIX_SCAN_RATE)
 static uint32_t matrix_timer      = 0;
 static uint32_t matrix_scan_count = 0;
+static uint32_t last_matrix_scan_count = 0;
 
 void matrix_scan_perf_task(void) {
     matrix_scan_count++;
 
     uint32_t timer_now = timer_read32();
     if (TIMER_DIFF_32(timer_now, matrix_timer) > 1000) {
+#    if defined(CONSOLE_ENABLE)
         dprintf("matrix scan frequency: %d\n", matrix_scan_count);
-
+#    endif
+        last_matrix_scan_count = matrix_scan_count;
         matrix_timer      = timer_now;
         matrix_scan_count = 0;
     }
+}
+
+uint32_t get_matrix_scan_rate(void) {
+    return last_matrix_scan_count;
 }
 #else
 #    define matrix_scan_perf_task()
@@ -255,6 +280,7 @@ __attribute__((weak)) void housekeeping_task_user(void) {}
  */
 void keyboard_init(void) {
     timer_init();
+    sync_timer_init();
     matrix_init();
 #ifdef VIA_ENABLE
     via_init();
@@ -332,15 +358,15 @@ void keyboard_task(void) {
 #ifdef QMK_KEYS_PER_SCAN
     uint8_t keys_processed = 0;
 #endif
+#ifdef ENCODER_ENABLE
+    bool encoders_changed = false;
+#endif
 
     housekeeping_task_kb();
     housekeeping_task_user();
 
-#if defined(OLED_DRIVER_ENABLE) && !defined(OLED_DISABLE_TIMEOUT)
-    uint8_t ret = matrix_scan();
-#else
-    matrix_scan();
-#endif
+    uint8_t matrix_changed = matrix_scan();
+    if (matrix_changed) last_matrix_activity_trigger();
 
     if (should_process_keypress()) {
         for (uint8_t r = 0; r < MATRIX_ROWS; r++) {
@@ -396,7 +422,8 @@ MATRIX_LOOP_END:
 #endif
 
 #ifdef ENCODER_ENABLE
-    encoder_read();
+    encoders_changed = encoder_read();
+    if (encoders_changed) last_encoder_activity_trigger();
 #endif
 
 #ifdef QWIIC_ENABLE
@@ -406,8 +433,12 @@ MATRIX_LOOP_END:
 #ifdef OLED_DRIVER_ENABLE
     oled_task();
 #    ifndef OLED_DISABLE_TIMEOUT
-    // Wake up oled if user is using those fabulous keys!
-    if (ret) oled_on();
+    // Wake up oled if user is using those fabulous keys or spinning those encoders!
+#        ifdef ENCODER_ENABLE
+    if (matrix_changed || encoders_changed) oled_on();
+#        else
+    if (matrix_changed) oled_on();
+#        endif
 #    endif
 #endif
 

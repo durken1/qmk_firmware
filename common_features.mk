@@ -24,6 +24,8 @@ QUANTUM_SRC += \
 ifeq ($(strip $(DEBUG_MATRIX_SCAN_RATE_ENABLE)), yes)
     OPT_DEFS += -DDEBUG_MATRIX_SCAN_RATE
     CONSOLE_ENABLE = yes
+else ifeq ($(strip $(DEBUG_MATRIX_SCAN_RATE_ENABLE)), api)
+    OPT_DEFS += -DDEBUG_MATRIX_SCAN_RATE
 endif
 
 ifeq ($(strip $(API_SYSEX_ENABLE)), yes)
@@ -154,17 +156,37 @@ else
   endif
 endif
 
+RGBLIGHT_ENABLE ?= no
+VALID_RGBLIGHT_TYPES := WS2812 APA102 custom
+
+ifeq ($(strip $(RGBLIGHT_CUSTOM_DRIVER)), yes)
+    RGBLIGHT_DRIVER ?= custom
+endif
+
 ifeq ($(strip $(RGBLIGHT_ENABLE)), yes)
-    POST_CONFIG_H += $(QUANTUM_DIR)/rgblight_post_config.h
-    OPT_DEFS += -DRGBLIGHT_ENABLE
-    SRC += $(QUANTUM_DIR)/color.c
-    SRC += $(QUANTUM_DIR)/rgblight.c
-    CIE1931_CURVE := yes
-    RGB_KEYCODES_ENABLE := yes
-    ifeq ($(strip $(RGBLIGHT_CUSTOM_DRIVER)), yes)
-        OPT_DEFS += -DRGBLIGHT_CUSTOM_DRIVER
+    RGBLIGHT_DRIVER ?= WS2812
+
+    ifeq ($(filter $(RGBLIGHT_DRIVER),$(VALID_RGBLIGHT_TYPES)),)
+        $(error RGBLIGHT_DRIVER="$(RGBLIGHT_DRIVER)" is not a valid RGB type)
     else
+        POST_CONFIG_H += $(QUANTUM_DIR)/rgblight_post_config.h
+        OPT_DEFS += -DRGBLIGHT_ENABLE
+        SRC += $(QUANTUM_DIR)/color.c
+        SRC += $(QUANTUM_DIR)/rgblight.c
+        CIE1931_CURVE := yes
+        RGB_KEYCODES_ENABLE := yes
+    endif
+
+    ifeq ($(strip $(RGBLIGHT_DRIVER)), WS2812)
         WS2812_DRIVER_REQUIRED := yes
+    endif
+
+    ifeq ($(strip $(RGBLIGHT_DRIVER)), APA102)
+        APA102_DRIVER_REQUIRED := yes
+    endif
+
+    ifeq ($(strip $(RGBLIGHT_DRIVER)), custom)
+        OPT_DEFS += -DRGBLIGHT_CUSTOM_DRIVER
     endif
 endif
 
@@ -200,7 +222,7 @@ ifeq ($(strip $(RGB_MATRIX_ENABLE)), yes)
         $(error "$(RGB_MATRIX_DRIVER)" is not a valid matrix type)
     endif
     OPT_DEFS += -DRGB_MATRIX_ENABLE
-ifneq (,$(filter $(MCU), atmega16u2 atmega32u2))
+ifneq (,$(filter $(MCU), atmega16u2 atmega32u2 at90usb162))
     # ATmegaxxU2 does not have hardware MUL instruction - lib8tion must be told to use software multiplication routines
     OPT_DEFS += -DLIB8_ATTINY
 endif
@@ -241,6 +263,11 @@ endif
     ifeq ($(strip $(RGB_MATRIX_DRIVER)), WS2812)
         OPT_DEFS += -DWS2812
         WS2812_DRIVER_REQUIRED := yes
+    endif
+
+    ifeq ($(strip $(RGB_MATRIX_DRIVER)), APA102)
+        OPT_DEFS += -DAPA102
+        APA102_DRIVER_REQUIRED := yes
     endif
 
     ifeq ($(strip $(RGB_MATRIX_CUSTOM_KB)), yes)
@@ -343,6 +370,11 @@ ifeq ($(strip $(WS2812_DRIVER_REQUIRED)), yes)
     ifeq ($(strip $(WS2812_DRIVER)), i2c)
         QUANTUM_LIB_SRC += i2c_master.c
     endif
+endif
+
+ifeq ($(strip $(APA102_DRIVER_REQUIRED)), yes)
+    COMMON_VPATH += $(DRIVER_PATH)/apa102
+    SRC += apa102.c
 endif
 
 ifeq ($(strip $(VISUALIZER_ENABLE)), yes)

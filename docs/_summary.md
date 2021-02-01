@@ -3,7 +3,6 @@
   * [Setup](newbs_getting_started.md)
   * [Building Your First Firmware](newbs_building_firmware.md)
   * [Flashing Firmware](newbs_flashing.md)
-  * [Testing and Debugging](newbs_testing_debugging.md)
   * [Getting Help/Support](support.md)
   * [Other Resources](newbs_learn_more_resources.md)
   * [Syllabus](syllabus.md)
@@ -11,7 +10,8 @@
 * FAQs
   * [General FAQ](faq_general.md)
   * [Build/Compile QMK](faq_build.md)
-  * [Debugging/Troubleshooting QMK](faq_debug.md)
+  * [Troubleshooting QMK](faq_misc.md)
+  * [Debugging QMK](faq_debug.md)
   * [Keymap FAQ](faq_keymap.md)
   * [Glossary](reference_glossary.md)
 
@@ -138,6 +138,7 @@
       * [WS2812 Driver](ws2812_driver.md)
       * [EEPROM Driver](eeprom_driver.md)
       * ['serial' Driver](serial_driver.md)
+      * [UART Driver](uart_driver.md)
     * [GPIO Controls](internals_gpio_control.md)
     * [Keyboard Guidelines](hardware_keyboard_guidelines.md)
 
@@ -159,6 +160,7 @@
     * [Contributing to QMK](contributing.md)
     * [Translating the QMK Docs](translating.md)
     * [Config Options](config_options.md)
+    * [Data Driven Configuration](data_driven_config.md)
     * [Make Documentation](getting_started_make_guide.md)
     * [Documentation Best Practices](documentation_best_practices.md)
     * [Documentation Templates](documentation_templates.md)

@@ -181,6 +181,22 @@ If you're having issues with serial communication, you can change this value, as
 * **`4`**: about 26kbps
 * **`5`**: about 20kbps
 
+```c
+#define SPLIT_MODS_ENABLE
+```
+
+This enables transmitting modifier state (normal, weak and oneshot) to the non
+primary side of the split keyboard.  This adds a few bytes of data to the split
+communication protocol and may impact the matrix scan speed when enabled.
+The purpose of this feature is to support cosmetic use of modifer state (e.g.
+displaying status on an OLED screen).
+
+```c
+#define SPLIT_HOST_SYNC_ENABLE
+```
+
+This enables syncingo of the Host LED status (caps lock, num lock, etc) betwen both halves of the split keyboard. The main purpose of this feature is to enable support for use of things like OLED display of the Host LED status. 
+
 ###  Hardware Configuration Options
 
 There are some settings that you may need to configure, based on how the hardware is set up. 

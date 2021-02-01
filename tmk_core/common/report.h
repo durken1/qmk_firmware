@@ -39,7 +39,10 @@ enum mouse_buttons {
     MOUSE_BTN2 = (1 << 1),
     MOUSE_BTN3 = (1 << 2),
     MOUSE_BTN4 = (1 << 3),
-    MOUSE_BTN5 = (1 << 4)
+    MOUSE_BTN5 = (1 << 4),
+    MOUSE_BTN6 = (1 << 5),
+    MOUSE_BTN7 = (1 << 6),
+    MOUSE_BTN8 = (1 << 7)
 };
 
 /* Consumer Page (0x0C)
@@ -122,12 +125,6 @@ enum desktop_usages {
 #endif
 
 #define KEYBOARD_REPORT_KEYS 6
-
-/* VUSB hardcodes keyboard and mouse+extrakey only */
-#if defined(PROTOCOL_VUSB)
-#    undef KEYBOARD_SHARED_EP
-#    undef MOUSE_SHARED_EP
-#endif
 
 #ifdef __cplusplus
 extern "C" {
