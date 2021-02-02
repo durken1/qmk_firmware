@@ -3,6 +3,7 @@
 #pragma once
 
 #define EE_HANDS
+#define SPLIT_HOST_SYNC_ENABLE
 
 #if defined MH_MODULE_TRACKPOINT && defined PS2_MOUSE_ENABLE
   // clock on pin 3 (d0, int0)
