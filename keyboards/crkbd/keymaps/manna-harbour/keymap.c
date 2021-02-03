@@ -153,7 +153,9 @@ void matrix_render_user(struct CharacterMatrix *matrix) {
   }
   #elif defined MH_OLED_MODE_LAYER
   matrix_write_ln(matrix, read_layer_state());
-  matrix_write_ln(matrix, read_host_led_state());
+  if (host_keyboard_leds() & (1<<USB_LED_CAPS_LOCK)) {
+    matrix_write_ln(matrix, "CAPS");
+  }
   #endif // defined MH_OLED_MODE_CAPS
 }
 
