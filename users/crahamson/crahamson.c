@@ -8,6 +8,13 @@ enum {
   RAI_ENTR
 };
 
+enum crkbd_layers {
+    _BASE,
+    _MBO,
+    _GAME,
+    _LOWER,
+    _RAISE,
+};
 
 qk_tap_dance_action_t tap_dance_actions[] = {
 };
@@ -32,12 +39,12 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define ALT_SPC LALT_T(KC_SPC)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [BASE] = LAYOUT_split_3x6_3(
+  [_BASE] = LAYOUT_split_3x6_3(
   // Colemak
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_ESC,    SE_Q,    SE_W,    SE_F,    SE_P,    SE_B,                         SE_Y,    SE_L,    SE_U,    SE_K, SE_ODIA, SE_ARNG,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_BSPC,   GUI_A,   ALT_R,   SFT_S,  CTRL_T,    SE_G,                         SE_M,   CTL_N,   SFT_E,   ALT_I,   GUI_O, SE_ADIA,
+      KC_BSPC,    SE_A,   ALT_R,   SFT_S,  CTRL_T,    SE_G,                         SE_M,   CTL_N,   SFT_E,   ALT_I,    SE_O, SE_ADIA,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX,    SE_Z,    SE_X,    SE_C,    SE_D,    SE_V,                         SE_J,    SE_H, SE_COMM,  SE_DOT, SE_MINS, KC_CAPS,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -46,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   ),
 
-  [MBO] = LAYOUT_split_3x6_3(
+  [_MBO] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -59,7 +66,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   ),
 
-  [GAME] = LAYOUT_split_3x6_3(
+  [_GAME] = LAYOUT_split_3x6_3(
   // Colemak
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_ESC,    SE_Q,    SE_W,    SE_E,    SE_R,    SE_T,                         SE_Y,    SE_U,    SE_I,    SE_O,    SE_P, SE_ARNG,
@@ -72,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-  [LOWER] = LAYOUT_split_3x6_3(
+  [_LOWER] = LAYOUT_split_3x6_3(
   // Lower
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       KC_CALC, XXXXXXX, XXXXXXX, SE_EXLM, SE_HASH, XXXXXXX,                      XXXXXXX,    SE_7,    SE_8,    SE_9, XXXXXXX, SE_DIAE,
@@ -85,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-  [RAISE] = LAYOUT_split_3x6_3(
+  [_RAISE] = LAYOUT_split_3x6_3(
   // Raise
   //-----------------------------------------------------.                    ,-----------------------------------------------------.
       SE_SECT, XXXXXXX,   KC_UP, SE_ACUT, SE_SLSH, SE_TILD,                      SE_PIPE, SE_BSLS,   KC_F7,   KC_F8,   KC_F9,  KC_F10,
