@@ -2,19 +2,6 @@
 #include "keymap_swedish.h"
 #include "durken-x.h"
 
-enum crkbd_layers {
-    _BASE,
-    _MBO,
-    _SYM,
-    _LOWER,
-    _RAISE,
-    _FN
-};
-
-qk_tap_dance_action_t tap_dance_actions[] = {
-};
-
-
 // Left-hand home row mods colemak
 #define GUI_A LGUI_T(KC_A)
 #define ALT_R LALT_T(KC_R)
@@ -33,7 +20,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define FN_DEL LT(FN, KC_DEL)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [_BASE] = LAYOUT(
+  [BASE] = LAYOUT(
   // Colemak Mod-DH
   //,--------------------------------------------,                    ,--------------------------------------------.
          SE_Q,    SE_W,    SE_F,    SE_P,    SE_B,                         SE_Y,    SE_L,    SE_U,    SE_K, SE_ODIA,
@@ -47,7 +34,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   ),
 
-  [_MBO] = LAYOUT(
+  [MBO] = LAYOUT(
   // Mouse
   //,--------------------------------------------,                    ,--------------------------------------------.
       _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______,
@@ -61,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   ),
 
-  [_SYM] = LAYOUT(
+  [SYM] = LAYOUT(
   // Symbols
   //,--------------------------------------------,                    ,--------------------------------------------.
       SE_SECT, SE_QUOT, SE_SLSH, SE_TILD, _______,                      _______, SE_PIPE, SE_BSLS, SE_DIAE, _______,
@@ -74,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                              //`--------------------------'  '--------------------------'
   ),
 
-  [_LOWER] = LAYOUT(
+  [LOWER] = LAYOUT(
   // Lower
   //,--------------------------------------------,                    ,--------------------------------------------.
       _______, _______, SE_EXLM, _______, _______,                      _______,    SE_7,    SE_8,    SE_9, _______,
@@ -87,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                              //`--------------------------'  '--------------------------'
   ),
 
-  [_RAISE] = LAYOUT(
+  [RAISE] = LAYOUT(
   // Raise
   //,--------------------------------------------,                    ,--------------------------------------------.
       _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______,
@@ -100,7 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                              //`--------------------------'  '--------------------------'
   ),
 
-  [_FN] = LAYOUT(
+  [FN] = LAYOUT(
   // Raise
   //,--------------------------------------------,                    ,--------------------------------------------.
       _______, _______, _______, _______, _______,                      _______,   KC_F7,   KC_F8,   KC_F9,  KC_F10,
@@ -114,5 +101,3 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   )
 
 };
-
-

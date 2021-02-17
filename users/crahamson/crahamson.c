@@ -17,8 +17,8 @@ enum crkbd_layers {
     _FN
 };
 
-qk_tap_dance_action_t tap_dance_actions[] = {
-};
+//qk_tap_dance_action_t tap_dance_actions[] = {
+//};
 
 
 // Left-hand home row mods colemak
