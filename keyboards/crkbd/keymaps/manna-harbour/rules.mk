@@ -1,20 +1,20 @@
 ## https://github.com/manna-harbour/qmk_firmware/blob/crkbd/keyboards/crkbd/keymaps/manna-harbour/readme.org
 
 
-#MH_MODULE=trackpoint
+MH_MODULE=trackpoint
 #MH_MODULE=oled
-MH_MODULE=oled_old
+#MH_MODULE=oled_old
 #MH_MODULE=no
 
-#MH_AUTO_BUTTONS=yes
+MH_AUTO_BUTTONS=yes
 #MH_AUTO_BUTTONS=no
 
-#MH_LOW_MOUSE=yes
+MH_LOW_MOUSE=yes
 #H_LOW_MOUSE=no
 
 #MH_OLED_MODE=static
 #MH_OLED_MODE=caps
-MH_OLED_MODE=layer
+öMH_OLED_MODE=layer
 #MH_OLED_MODE=no
 
 #MH_OLED_IMAGE=qmk.c

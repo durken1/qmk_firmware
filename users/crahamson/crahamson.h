@@ -15,4 +15,4 @@
 #define KC_SAI RGB_SAI
 #define KC_VAI RGB_VAI
 
-enum layers { BASE, MBO, GAME, LOWER, RAISE };
+enum layers { BASE, MBO, SYM, LOWER, RAISE, FN };

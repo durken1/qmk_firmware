@@ -5,11 +5,10 @@
 
 // in the future, should use (1U<<_LAYER_NAME) instead, but needs to be moved to keymap,c
 #define L_BASE 0
-#define L_MBO 2
-#define L_GAME 4
+#define L_SYM 4
 #define L_LOWER 8
 #define L_RAISE 16
-#define L_GRAISE 20
+#define L_FN 32
 
 char layer_state_str[24];
 
@@ -19,18 +18,17 @@ const char *read_layer_state(void) {
   case L_BASE:
     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Colemak");
     break;
-  case L_MBO:
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: MBO");
-    break;
-  case L_GAME:
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Game");
+  case L_SYM:
+    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Symbols");
     break;
   case L_LOWER:
     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Lower");
     break;
   case L_RAISE:
-  case L_GRAISE:
     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Raise");
+    break;
+  case L_FN:
+    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: FN");
     break;
   default:
     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Undef-%ld", layer_state);
