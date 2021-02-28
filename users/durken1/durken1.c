@@ -1,6 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "keymap_swedish.h"
-#include "durken-x.h"
+#include "durken1.h"
 
 // Left-hand home row mods colemak
 #define GUI_A LGUI_T(KC_A)

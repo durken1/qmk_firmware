@@ -3,10 +3,9 @@ MH_AUTO_BUTTONS=yes
 MH_LOW_MOUSE=yes
 LTO_ENABLE=no
 
-USER_NAME := durken-x
+USER_NAME := durken1
 
-
-this_dir=keyboards/pierce/keymaps/durken-x
+this_dir=keyboards/pierce/keymaps/durken1
 
 OPT_DEFS += -DMH_USER_NAME_H=\"$(USER_NAME).h\"
 
@@ -24,5 +23,3 @@ endif
 ifeq ($(strip $(MH_LOW_MOUSE)), yes)
   OPT_DEFS += -DMH_LOW_MOUSE
 endif
-
-
