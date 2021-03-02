@@ -1,25 +1,26 @@
-MH_TRACKPOINT=yes
-MH_AUTO_BUTTONS=yes
-MH_LOW_MOUSE=yes
-LTO_ENABLE=no
+#TRACKPOINT = interrupt
+#TRACKPOINT = usart
+AUTO_BUTTONS = yes
+MOUSEKEY_ENABLE = yes
 
 USER_NAME := durken1
 
-this_dir=keyboards/pierce/keymaps/durken1
+this_dir = keyboards/pierce/keymaps/durken1
 
-OPT_DEFS += -DMH_USER_NAME_H=\"$(USER_NAME).h\"
+OPT_DEFS += -DUSER_NAME_H=\"$(USER_NAME).h\"
 
-ifeq ($(strip $(MH_TRACKPOINT)), yes)
+ifeq ($(strip $(TRACKPOINT)), interrupt)
   PS2_MOUSE_ENABLE = yes
   PS2_USE_INT = yes
-  OPT_DEFS += -DMH_MODULE_TRACKPOINT
+  OPT_DEFS += -DINTERRUPT
+else ifeq ($(strip $(TRACKPOINT)), usart)
+  PS2_MOUSE_ENABLE = yes
+  PS2_USE_USART = yes
+  OPT_DEFS += -DUSART
 endif
 
-ifeq ($(strip $(MH_AUTO_BUTTONS)), yes)
+ifeq ($(strip $(AUTO_BUTTONS)), yes)
   MOUSEKEY_ENABLE = yes
-  OPT_DEFS += -DMH_AUTO_BUTTONS
+  OPT_DEFS += -DAUTO_BUTTONS
 endif
 
-ifeq ($(strip $(MH_LOW_MOUSE)), yes)
-  OPT_DEFS += -DMH_LOW_MOUSE
-endif
